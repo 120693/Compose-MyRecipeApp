@@ -1,6 +1,7 @@
 package com.example.myrecipeapp
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.aspectRatio
@@ -25,7 +26,8 @@ import coil.compose.rememberAsyncImagePainter
 
 @Composable
 fun RecipeScreen(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    navigateToDetail: (Category) -> Unit
 ) {
     // 데이터 받아오기
     // viewModel(): 이는 Android KTX(Android Kotlin Extensions)에서 제공하는 확장 함수
@@ -51,7 +53,7 @@ fun RecipeScreen(
             }
         // 로딩중도 아니고 에러도 아닐 때 보여줄 화면 -> 즉 우리가 보여줄 화면!
             else -> {
-                CategoryScreen(categories = viewState.list)
+                CategoryScreen(categories = viewState.list, navigateToDetail)  // navigateToDetail 은 여기서 실행할 것이 아니므로 그냥 전달만
             }
         }
     }
@@ -60,14 +62,15 @@ fun RecipeScreen(
 // 전체 리스트 UI
 @Composable
 fun CategoryScreen(
-    categories: List<Category>
+    categories: List<Category>,
+    navigateToDetail: (Category) -> Unit  // 네비게이션 책임을 상위로 넘기기
 ) {
     LazyVerticalGrid(
         GridCells.Fixed(2),  // 열 개수
         modifier = Modifier.fillMaxSize()) {
         // content
         items(categories) {
-                category -> CategoryItem(category = category)  // CategoryItem : 각 항목을 표현하는 Composable
+                category -> CategoryItem(category = category, navigateToDetail)  // CategoryItem : 각 항목을 표현하는 Composable
             // 그리드에 표시할 각 항목을 정의하는 블록
         }
     }
@@ -76,13 +79,17 @@ fun CategoryScreen(
 // 리스트 아이템 UI
 @Composable
 fun CategoryItem(
-    category: Category
+    category: Category,
+    navigateToDetail: (Category) -> Unit  // 네비게이션
 ) {
     Column(
         modifier = Modifier
             .padding(8.dp)
-            .fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally
+            .fillMaxSize()
+            .clickable { // 클릭 속성이 여기에 존재함
+                navigateToDetail(category)  // 실행은 여기서!!
+            },
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Image(
             painter = rememberAsyncImagePainter(category.strCategoryThumb),
