@@ -27,17 +27,26 @@ import coil.compose.rememberAsyncImagePainter
 @Composable
 fun RecipeScreen(
     modifier: Modifier = Modifier,
+    viewState: MainViewModel.RecipeState,
     navigateToDetail: (Category) -> Unit
 ) {
+    /**
+     * 네이게이션 작업을 하기 전에는 여기서 데이터도 직접 가져와서 작업했지만
+     * 사실 궁극적으로는 관리만 하면 된다
+     * 모든걸 여기서 할 이유가 없다는 사실!
+     * 여기는 화면이다!!!
+     */
     // 데이터 받아오기
     // viewModel(): 이는 Android KTX(Android Kotlin Extensions)에서 제공하는 확장 함수
     // 이 함수는 ViewModelProvider를 사용하여 ViewModel 인스턴스를 생성하거나 가져오는 역할
     // viewModel() 함수는 현재 액티비티나 프래그먼트의 범위 내에서 ViewModel을 가져오기 위한 간단한 방법을 제공
-    val recipeViewModel: MainViewModel = viewModel()
+//    val recipeViewModel: MainViewModel = viewModel()
     // MainViewModel의 인스턴스를 생성하거나 가져와서 recipeViewModel 변수에 할당하는 코드
     // 이렇게 하면 해당 ViewModel의 인스턴스가 현재 액티비티나 프래그먼트와 연결되며, 데이터를 관리하고 UI에 제공
 
-    val viewState by recipeViewModel.categoriesState  // 이 상태가 변경되면 UI도 업데이트된다!
+//    val viewState by recipeViewModel.categoriesState  // 이 상태가 변경되면 UI도 업데이트된다!
+    // 여기서는 뷰모델을 설정할 필요가 없다. 관리만 하면 된다.
+    // 관리만 하기 위해서 전달만 하자!!!! -> 파라미터로 넣기
 
     Box(
         modifier = Modifier.fillMaxSize()

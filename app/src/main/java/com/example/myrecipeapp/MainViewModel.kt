@@ -24,7 +24,7 @@ class MainViewModel: ViewModel() {
     private fun fetchCategories() {
         // suspend fun 함수가 백그라운드에서 처리되도록 하기 위해서 코루틴 안에서 실행
         viewModelScope.launch {
-            // 인터넷이 끊기거나 했을 때도 앱이 죽지 않도록
+            // 인터넷이 끊기거나 했을 때도 앱이 죽지 않도록 try-catch 사용
             try {
                 // api 값 가져오기
                 val response = recipeService.getCagegories()

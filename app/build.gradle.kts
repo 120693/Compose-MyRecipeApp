@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("kotlin-parcelize")
 }
 
 android {
@@ -73,4 +74,6 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     // 이미지 로드
     implementation("io.coil-kt:coil-compose:2.4.0")
+    // 네비게이션
+    implementation("androidx.navigation:navigation-compose:2.7.4")
 }
